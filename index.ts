@@ -1,8 +1,13 @@
 import express from "express";
-import * as trpc from "@trpc/server";
+
+import { initTRPC } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cors from "cors";
 import { z } from "zod";
+import { Prisma, PrismaClient } from "@prisma/client";
+
+const t = initTRPC.create();
+const prisma = new PrismaClient();
 
 interface ChatMessage {
   user: string;
@@ -14,10 +19,26 @@ const messages: ChatMessage[] = [
   { user: "user2", message: "Hi" },
 ];
 
-const appRouter = trpc.router().query("hello", {
-  resolve() {
-    return "Hello world III";
-  },
+const appRouter = t.router({
+  batchGeoCode: t.procedure
+    .input((val: unknown) => {
+      if (Array.isArray(val)) {
+        return val;
+      }
+      throw new Error("Invalid input Type");
+    })
+    .query(async (req) => {
+      const { input } = req;
+      const geojson = await prisma.geojson.findMany({
+        where: {
+          iso_name: {
+            in: input,
+          },
+        },
+      });
+
+      return geojson;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
@@ -30,7 +51,6 @@ app.use(
   "/trpc",
   trpcExpress.createExpressMiddleware({
     router: appRouter,
-    createContext: () => null,
   })
 );
 
