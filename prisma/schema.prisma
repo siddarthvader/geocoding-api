@@ -11,8 +11,8 @@ datasource db {
 }
 
 model geojson {
-  id         Int      @id @default(autoincrement())
-  iso_name   String   @unique
+  iso_name   String   @id @unique
+  full_name  String
   geojson    Json     @db.Json
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @updatedAt
