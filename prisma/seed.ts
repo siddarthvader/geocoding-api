@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient, geojson } from "@prisma/client";
 
 import * as rawgeojson from "./../data/countries.json";
-import { Feature } from "geojson";
 
 const prisma = new PrismaClient();
 
