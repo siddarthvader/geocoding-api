@@ -12,17 +12,16 @@ const prisma = new PrismaClient();
 dotenv.config();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use("*", cors());
 
 type BatchGeocodeReq = {
   geo_locations: string[];
 };
 
 type BatchGeocodeRes = geojson[];
-app.options("*", cors());
+
 app.post(
   "/batch-geocode",
-  cors(),
   async (req: Request<BatchGeocodeReq>, res: Response<BatchGeocodeRes>) => {
     console.log("req.body is..", req.body);
     const { geo_locations } = req.body;
