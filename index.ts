@@ -14,6 +14,8 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use("*", cors());
 
+app.options("/batch-geocode", cors());
+
 type BatchGeocodeReq = {
   geo_locations: string[];
 };
