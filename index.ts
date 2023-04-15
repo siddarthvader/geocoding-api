@@ -41,6 +41,7 @@ app.post(
     });
 
     // console.log("geojson is...", geojson);
+    res.sendStatus(200);
     res.json(geojson);
   }
 );
