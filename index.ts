@@ -19,11 +19,10 @@ type BatchGeocodeReq = {
 };
 
 type BatchGeocodeRes = geojson[];
-app.options("*", function (req, res) {
-  res.sendStatus(200);
-});
+app.options("*", cors());
 app.post(
   "/batch-geocode",
+  cors(),
   async (req: Request<BatchGeocodeReq>, res: Response<BatchGeocodeRes>) => {
     console.log("req.body is..", req.body);
     const { geo_locations } = req.body;
