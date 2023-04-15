@@ -4,6 +4,7 @@ import cors from "cors";
 
 import dotenv from "dotenv";
 import { PrismaClient, geojson } from "@prisma/client";
+import path from "path";
 const app: Express = express();
 const port = process.env.SERVER_PORT;
 
@@ -13,6 +14,7 @@ dotenv.config();
 
 app.use(bodyParser.json());
 app.use("*", cors());
+app.use(express.static("public"));
 
 app.options("/batch-geocode", cors());
 
@@ -23,7 +25,7 @@ type BatchGeocodeReq = {
 type BatchGeocodeRes = geojson[];
 
 app.get("/", (req, res) => {
-  res.json({ message: "hello from geocoding API" });
+  res.sendFile("index.html", { root: path.join(__dirname, "public") });
 });
 
 app.post(
