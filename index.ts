@@ -22,6 +22,10 @@ type BatchGeocodeReq = {
 
 type BatchGeocodeRes = geojson[];
 
+app.get("/", (req, res) => {
+  res.json({ message: "hello from geocoding API" });
+});
+
 app.post(
   "/batch-geocode",
   async (req: Request<BatchGeocodeReq>, res: Response<BatchGeocodeRes>) => {
