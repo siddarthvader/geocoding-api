@@ -18,8 +18,6 @@ app.use(express.static("public"));
 
 app.options("/batch-geocode", cors());
 
-// alright then
-
 type BatchGeocodeReq = {
   geo_locations: string[];
 };
