@@ -24,6 +24,9 @@ dotenv_1.default.config();
 app.use(body_parser_1.default.json());
 app.use("*", (0, cors_1.default)());
 app.options("/batch-geocode", (0, cors_1.default)());
+app.get("/", (req, res) => {
+    res.json({ message: "hello from geocoding API" });
+});
 app.post("/batch-geocode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("req.body is..", req.body);
     const { geo_locations } = req.body;
