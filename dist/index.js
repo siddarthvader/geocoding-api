@@ -25,7 +25,7 @@ dotenv_1.default.config();
 app.use(body_parser_1.default.json());
 app.use("*", (0, cors_1.default)());
 app.use(express_1.default.static("public"));
-app.options("/batch-geocode", (0, cors_1.default)());
+app.options("*", (0, cors_1.default)());
 app.get("/", (req, res) => {
     res.sendFile("index.html", { root: path_1.default.join(__dirname, "public") });
 });

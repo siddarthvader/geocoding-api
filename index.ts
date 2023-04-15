@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use("*", cors());
 app.use(express.static("public"));
 
-app.options("/batch-geocode", cors());
+app.options("*", cors());
 
 type BatchGeocodeReq = {
   geo_locations: string[];
