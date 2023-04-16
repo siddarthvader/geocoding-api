@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 dotenv.config();
 
 app.use(bodyParser.json());
-app.use("*", cors());
+app.use(cors());
 app.use(express.static("public"));
 
 app.options("*", cors());
@@ -25,11 +25,13 @@ type BatchGeocodeReq = {
 type BatchGeocodeRes = geojson[];
 
 app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: path.join(__dirname, "public") });
+  // res.sendFile("index.html", { root: path.join(__dirname, "public") });
+  res.json({ message: "hello world" });
 });
 
 app.post(
   "/batch-geocode",
+
   async (req: Request<BatchGeocodeReq>, res: Response<BatchGeocodeRes>) => {
     console.log("req.body is..", req.body);
     const { geo_locations } = req.body;

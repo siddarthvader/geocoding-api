@@ -17,17 +17,17 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const client_1 = require("@prisma/client");
-const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 const port = process.env.SERVER_PORT;
 const prisma = new client_1.PrismaClient();
 dotenv_1.default.config();
 app.use(body_parser_1.default.json());
-app.use("*", (0, cors_1.default)());
+app.use((0, cors_1.default)());
 app.use(express_1.default.static("public"));
 app.options("*", (0, cors_1.default)());
 app.get("/", (req, res) => {
-    res.sendFile("index.html", { root: path_1.default.join(__dirname, "public") });
+    // res.sendFile("index.html", { root: path.join(__dirname, "public") });
+    res.json({ message: "hello world" });
 });
 app.post("/batch-geocode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("req.body is..", req.body);
