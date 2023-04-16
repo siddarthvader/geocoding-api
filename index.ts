@@ -40,7 +40,6 @@ app.get("/", (req, res) => {
 
 app.post(
   "/batch-geocode",
-
   async (req: Request<BatchGeocodeReq>, res: Response<BatchGeocodeRes>) => {
     console.log("req.body is..", req.body);
     const { geo_locations } = req.body;
@@ -60,6 +59,7 @@ app.post(
     });
 
     // console.log("geojson is...", geojson);
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(200);
     res.json(geojson);
   }

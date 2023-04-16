@@ -51,6 +51,7 @@ app.post("/batch-geocode", (req, res) => __awaiter(void 0, void 0, void 0, funct
         },
     });
     // console.log("geojson is...", geojson);
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(200);
     res.json(geojson);
 }));
