@@ -25,11 +25,14 @@ app.use(body_parser_1.default.json());
 app.use((0, cors_1.default)());
 app.use(express_1.default.static("public"));
 app.options("*", (0, cors_1.default)());
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 app.get("/", (req, res) => {
     // res.sendFile("index.html", { root: path.join(__dirname, "public") });
     res.json({ message: "hello world" });
@@ -51,7 +54,7 @@ app.post("/batch-geocode", (req, res) => __awaiter(void 0, void 0, void 0, funct
         },
     });
     // console.log("geojson is...", geojson);
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.status(200);
     res.json(geojson);
 }));
