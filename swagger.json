@@ -1,0 +1,89 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Batch Geo Coding",
+    "description": "Get GeoJSON data for Locations(ISO:3166 compatible)",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "geocoding-api.vercel.app",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Batch Geocoding",
+      "description": "API for getting geojson from geolocations"
+    }
+  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/batch-geocode": {
+      "post": {
+        "tags": ["GeoJSON"],
+        "summary": "Get geojson for list of geolocations",
+        "parameters": [
+          {
+            "name": "geo_locations",
+            "type": "array",
+            "in": "body",
+            "description": "array of geolocation in ISO:3166 format or full name"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/GeoJSON"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GeoJSON": {
+      "required": [
+        "iso_name",
+        "full_name",
+        "geojson",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "iso_name": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "geojson": {
+          "type": "object",
+          "items": {
+            "type": "string",
+            "geometry": {
+              "type": "string",
+              "coordinates": "array"
+            },
+            "properties": {
+              "name": "string"
+            }
+          }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}
