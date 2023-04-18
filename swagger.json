@@ -7,6 +7,11 @@
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
+    },
+    "contact": {
+      "name": "siddharth",
+      "email": "me@siddharthjain.in",
+      "url": "https://www.siddharthjain.in/"
     }
   },
   "host": "geocoding-api.vercel.app",

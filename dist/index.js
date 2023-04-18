@@ -14,15 +14,21 @@ const swagger_json_1 = __importDefault(require("./swagger.json"));
 const app = (0, express_1.default)();
 const port = process.env.SERVER_PORT;
 dotenv_1.default.config();
+const ROOT_FOLDER = path_1.default.join(__dirname, "..");
+const SRC_FOLDER = path_1.default.join(ROOT_FOLDER, "src");
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
 app.use((0, cors_1.default)());
-app.use(express_1.default.static("public"));
+app.use("/public", express_1.default.static(path_1.default.join(SRC_FOLDER, "public")));
 app.options("*", (0, cors_1.default)());
-app.get("/", (req, res) => {
-    res.sendFile("index.html", { root: path_1.default.join(__dirname, "public") });
-});
+const options = {
+    customCssUrl: "/public/swagger-ui.css",
+    customSiteTitle: "Batch GeoCoding API - Swagger",
+};
+app.use("/public", express_1.default.static(path_1.default.join(SRC_FOLDER, "public")));
 app.post("/batch-geocode", batch_geocodig_1.default);
-app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
+app.use("/", swagger_ui_express_1.default.serve);
+app.get("/", swagger_ui_express_1.default.setup(swagger_json_1.default, options));
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });

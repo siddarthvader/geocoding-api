@@ -16,19 +16,28 @@ const port = process.env.SERVER_PORT;
 
 dotenv.config();
 
+const ROOT_FOLDER = path.join(__dirname, "..");
+const SRC_FOLDER = path.join(ROOT_FOLDER, "src");
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static("public"));
+
+app.use("/public", express.static(path.join(SRC_FOLDER, "public")));
 
 app.options("*", cors());
 
-app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: path.join(__dirname, "public") });
-});
+const options = {
+  customCssUrl: "/public/swagger-ui.css",
+  customSiteTitle: "Batch GeoCoding API - Swagger",
+};
+
+app.use("/public", express.static(path.join(SRC_FOLDER, "public")));
 
 app.post("/batch-geocode", batchGeocoding);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/", swaggerUi.serve);
+app.get("/", swaggerUi.setup(swaggerDocument, options));
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
